@@ -1,0 +1,10 @@
+.idea
+.vs
+.vscode
+build
+cmake-build-*
+ignore
+out
+profile
+.github
+
