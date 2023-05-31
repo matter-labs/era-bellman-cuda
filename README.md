@@ -1,6 +1,6 @@
 # bellman-cuda
 
-[![Logo](eraLogo.svg)](https://zksync.io/)
+[![Logo](eraLogo.png)](https://zksync.io/)
 
 zkSync Era is a layer 2 rollup that uses zero-knowledge proofs to scale Ethereum without compromising on security or
 decentralization. Since it's EVM compatible (Solidity/Vyper), 99% of Ethereum projects can redeploy without refactoring
@@ -55,7 +55,7 @@ at your option.
 - [GitHub](https://github.com/matter-labs)
 - [Twitter](https://twitter.com/zksync)
 - [Twitter for Devs](https://twitter.com/zkSyncDevs)
-- [Discord](https://discord.gg/nMaPGrDDwk)
+- [Discord](https://join.zksync.dev)
 
 ## Disclaimer
 
