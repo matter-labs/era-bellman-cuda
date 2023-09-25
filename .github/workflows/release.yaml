@@ -1,0 +1,47 @@
+name: Build and release
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_release:
+    runs-on: [ubuntu-latest]
+    container:
+      image: nvidia/cuda:11.8.0-devel-ubuntu22.04
+    permissions:
+      contents: write
+
+    steps:
+      - name: Prepare environment
+        run: |
+          apt update && apt install -y pkg-config libssl-dev libclang-dev gcc g++ cmake git hub
+
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: |
+          cmake -B./build -DCMAKE_BUILD_TYPE=Release
+          cmake --build ./build
+
+      - name: Generate output with commit SHA
+        if: ${{ github.event_name != 'pull_request' }}
+        id: short_sha
+        run: |
+          git config --global --add safe.directory $GITHUB_WORKSPACE
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Create prerelease
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          tar -czvf bellman-cuda.tar.gz ./build
+          hub release create prerelease-dev-${{ steps.short_sha.outputs.sha_short }} --prerelease \
+            -t ${{ github.sha }} -m prerelease-dev-${{ steps.short_sha.outputs.sha_short }} \
+            -a ./bellman-cuda.tar.gz prerelease-dev-${{ steps.short_sha.outputs.sha_short }}
