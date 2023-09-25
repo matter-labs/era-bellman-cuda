@@ -40,6 +40,8 @@ jobs:
 
       - name: Create prerelease
         #        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tar -czvf bellman-cuda.tar.gz ./build
           gh release create --prerelease prerelease-dev-${{ steps.short_sha.outputs.sha_short }} \
