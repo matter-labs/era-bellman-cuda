@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Prepare environment
         run: |
-          apt update && apt install -y pkg-config libssl-dev libclang-dev gcc g++ cmake git hub
+          apt update && apt install -y pkg-config libssl-dev libclang-dev gcc g++ cmake git gh
 
       - uses: actions/checkout@v3
 
