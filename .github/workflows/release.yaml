@@ -32,14 +32,14 @@ jobs:
           cmake --build ./build
 
       - name: Generate output with commit SHA
-        #if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         id: short_sha
         run: |
           git config --global --add safe.directory $GITHUB_WORKSPACE
           echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Create prerelease
-        #        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
