@@ -32,16 +32,16 @@ jobs:
           cmake --build ./build
 
       - name: Generate output with commit SHA
-        if: ${{ github.event_name != 'pull_request' }}
+        #if: ${{ github.event_name != 'pull_request' }}
         id: short_sha
         run: |
           git config --global --add safe.directory $GITHUB_WORKSPACE
           echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Create prerelease
-        if: ${{ github.event_name != 'pull_request' }}
+        #        if: ${{ github.event_name != 'pull_request' }}
         run: |
           tar -czvf bellman-cuda.tar.gz ./build
-          hub release create prerelease-dev-${{ steps.short_sha.outputs.sha_short }} --prerelease \
-            -t ${{ github.sha }} -m prerelease-dev-${{ steps.short_sha.outputs.sha_short }} \
-            -a ./bellman-cuda.tar.gz prerelease-dev-${{ steps.short_sha.outputs.sha_short }}
+          gh release create --prerelease prerelease-dev-${{ steps.short_sha.outputs.sha_short }} \
+            --target ${{ github.sha }} --title prerelease-dev-${{ steps.short_sha.outputs.sha_short }} \
+            ./bellman-cuda.tar.gz
