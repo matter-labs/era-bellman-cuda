@@ -387,7 +387,7 @@ template <class FF_CONFIG, const uint32_t &INV> struct ff_dispatch_st {
     } else {
       even[0] = ptx::add_cc(even[0], odd[1]);
       // we trust the compiler to *not* touch the carry flag here
-      // this code sits in between two "asm volatile" instructions witch should guarantee that nothing else interferes wit the carry flag
+      // this code sits in between two "asm volatile" instructions which should guarantee that nothing else interferes with the carry flag
       mi = even[0] * INV;
       madc_n_rshift(odd, MOD + 1, mi);
       cmad_n(even, MOD, mi);
