@@ -13,9 +13,9 @@ extern "C" {
 typedef enum bc_error {
   bc_success = 0,                 // The API call returned with no errors. In the case of query calls,
                                   // this also means that the operation being queried is complete (see bc_event_query() and bc_stream_query()).
-  bc_error_invalid_value = 1,     // This indicates that one or more of the parameters passed to the API call is not within an acceptable range of values.
+  bc_error_invalid_value = 1,     // This indicates that one or more of the parameters passed to the API call are not within an acceptable range of values.
   bc_error_memory_allocation = 2, // The API call failed because it was unable to allocate enough memory to perform the requested operation.
-  bc_error_not_ready = 600        // This indicates that asynchronous operations issued previously have not completed yet. This result is not actually an error,
+  bc_error_not_ready = 600        // This indicates that asynchronous operations issued previously have not been completed yet. This result is not actually an error,
                                   // but must be indicated differently than bc_success (which indicates completion). Calls that may return this value include
                                   // bc_event_query() and bc_stream_query().
 } bc_error;
@@ -67,7 +67,7 @@ bc_error bc_stream_synchronize(bc_stream stream);
 
 // Queries an asynchronous stream for completion status.
 // stream - Stream identifier
-// Returns bc_success if all operations in stream have completed, or bc_error_not_ready if not.
+// Returns bc_success if all operations in stream have been completed, or bc_error_not_ready if not.
 bc_error bc_stream_query(bc_stream stream);
 
 // Destroys and cleans up an asynchronous stream.

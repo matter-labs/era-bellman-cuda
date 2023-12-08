@@ -10,7 +10,7 @@ write smart contracts in C++, Rust and other popular languages.
 bellman-cuda is a library implementing GPU-accelerated cryptographic functionality for the zkSync prover. 
 
 ### Building the library
-The library can be build by executing these steps:
+The library can be built by executing these steps:
 
 #### Initialize git submodules
 `git submodule update --init --recursive`
@@ -21,7 +21,7 @@ The library can be build by executing these steps:
 
 The library binary can be found in the `./build/src` folder. Change the path in the above commands if a different build location is desired.
 
-By default, the library is build for Compute Architecture 8.0.
+By default, the library is built for Compute Architecture 8.0.
 If a different Compute Architecture is required, the [CMAKE_CUDA_ARCHITECTURES](https://cmake.org/cmake/help/latest/variable/CMAKE_CUDA_ARCHITECTURES.html) variables can be set to the desired architecture(s) during the build configuration generation step.
 
 Example for Compute Architecture 8.6: 
@@ -60,6 +60,6 @@ at your option.
 ## Disclaimer
 
 zkSync Era has been through lots of testing and audits. Although it is live, it is still in alpha state and will go
-through more audits and bug bounties programs. We would love to hear our community's thoughts and suggestions about it!
+through more audits and bug bounty programs. We would love to hear our community's thoughts and suggestions about it!
 It is important to state that forking it now can potentially lead to missing important security updates, critical
 features, and performance improvements.
