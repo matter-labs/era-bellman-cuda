@@ -85,7 +85,7 @@ cudaError_t set_up_powers() {
  *    C-T can straightforwardly meet both requirements.
  *
  *    Cooley-Tukey does not sacrifice performance.
- *    Using careful shared memory marshalling, the kernels below carry out
+ *    Using careful shared memory marshaling, the kernels below carry out
  *    up to 10 exchange stages at a time for each gmem read+write of the data.
  */
 
