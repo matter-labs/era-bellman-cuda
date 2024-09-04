@@ -280,6 +280,11 @@ bc_error pn_set_values_from_packed_bits(void *values, const void *packet_bits, c
                                                                static_cast<cudaStream_t>(stream.handle)));
 }
 
+bc_error pn_distribute_values(const void *src, void *dst, const unsigned count, const unsigned stride, bc_stream stream) {
+  return static_cast<bc_error>(pn::distribute_values(static_cast<const fd_q::storage *>(src), static_cast<fd_q::storage *>(dst), count, stride,
+                                                               static_cast<cudaStream_t>(stream.handle)));
+}
+
 bc_error pn_tear_down() { return static_cast<bc_error>(pn::tear_down()); };
 
 bc_error msm_set_up() { return static_cast<bc_error>(msm::set_up()); }

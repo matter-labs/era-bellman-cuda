@@ -18,4 +18,6 @@ cudaError_t generate_permutation_matrix(fd_q::storage *values, const fd_q::stora
 
 cudaError_t set_values_from_packed_bits(fd_q::storage *values, const unsigned *packet_bits, unsigned count, cudaStream_t stream);
 
+cudaError_t distribute_values(const fd_q::storage *src, fd_q::storage *dst, unsigned count, unsigned stride, cudaStream_t stream);
+
 } // namespace pn
