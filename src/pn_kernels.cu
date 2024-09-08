@@ -141,4 +141,21 @@ cudaError_t set_values_from_packed_bits(fd_q::storage *values, const unsigned *p
   return cudaGetLastError();
 }
 
+__global__ void distribute_values_kernel(const fd_q::storage *src, fd_q::storage *dst, const unsigned count, const unsigned stride) {
+  typedef fd_q::storage storage;
+  const unsigned gid = blockIdx.x * blockDim.x + threadIdx.x;
+  if (gid >= count)
+    return;
+  const auto value = memory::load<storage, memory::ld_modifier::cs>(src + gid);
+  memory::store<storage, memory::st_modifier::cs>(dst + gid * stride, value);
+}
+
+cudaError_t distribute_values(const fd_q::storage *src, fd_q::storage *dst, const unsigned count, const unsigned stride, cudaStream_t stream) {
+  const unsigned threads_per_block = 128;
+  const dim3 block_dim = count < threads_per_block ? count : threads_per_block;
+  const dim3 grid_dim = (count - 1) / block_dim.x + 1;
+  distribute_values_kernel<<<grid_dim, block_dim, 0, stream>>>(src, dst, count, stride);
+  return cudaGetLastError();
+}
+
 } // namespace pn

@@ -458,6 +458,14 @@ bc_error pn_generate_permutation_polynomials(generate_permutation_polynomials_co
 // stream - Stream on which this operation will be scheduled
 bc_error pn_set_values_from_packed_bits(void *values, const void *packet_bits, unsigned count, bc_stream stream);
 
+// Distribute field element values with a stride
+// src - device pointer to the vector of field elements from where the values will be read
+// dst - device pointer to the vector of field elements to where the results will be written
+// count - number of values to distribute
+// stride - stride with which the values will be distributed
+// stream - Stream on which this operation will be scheduled
+bc_error pn_distribute_values(const void *src, void *dst, unsigned count, unsigned stride, bc_stream stream);
+
 // release all resources associated with the internal state for polynomial computations
 bc_error pn_tear_down();
 
