@@ -44,6 +44,7 @@ template <unsigned COL_COUNT> cudaError_t transpose(unsigned *dst, const unsigne
   return cudaGetLastError();
 }
 
+template cudaError_t transpose<3>(unsigned *dst, const unsigned *src, unsigned log_rows_count, cudaStream_t stream);
 template cudaError_t transpose<4>(unsigned *dst, const unsigned *src, unsigned log_rows_count, cudaStream_t stream);
 #undef BLOCK_SIZE
 

@@ -19,7 +19,6 @@ cudaError_t generate_permutation_polynomials(const generate_permutation_polynomi
   cudaMemPool_t pool = cfg.mem_pool;
   cudaStream_t stream = cfg.stream;
   unsigned int columns_count = cfg.columns_count;
-  assert(columns_count == 4);
   unsigned int log_rows_count = cfg.log_rows_count;
   const unsigned cells_count = columns_count << log_rows_count;
   const unsigned bits_count = log2_ceiling(columns_count) + log_rows_count;
@@ -31,7 +30,14 @@ cudaError_t generate_permutation_polynomials(const generate_permutation_polynomi
   unsigned_ints sorted_values;
 
   HANDLE_CUDA_ERROR(allocate(unsorted_keys, cells_count, pool, stream));
-  HANDLE_CUDA_ERROR(transpose<4>(unsorted_keys, cfg.indexes, log_rows_count, stream));
+  switch (columns_count) {
+  case 3:
+    HANDLE_CUDA_ERROR(transpose<3>(unsorted_keys, cfg.indexes, log_rows_count, stream));
+  case 4:
+    HANDLE_CUDA_ERROR(transpose<4>(unsorted_keys, cfg.indexes, log_rows_count, stream));
+  default:
+    assert(columns_count == 3 || columns_count == 4);
+  }
   HANDLE_CUDA_ERROR(allocate(unsorted_values, cells_count, pool, stream));
   HANDLE_CUDA_ERROR(fill_transposed_range(unsorted_values, columns_count, log_rows_count, stream));
   HANDLE_CUDA_ERROR(allocate(sorted_keys, cells_count, pool, stream));
