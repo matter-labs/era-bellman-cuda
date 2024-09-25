@@ -109,9 +109,8 @@ __device__ __forceinline__ typename FD::storage *index_to_addr(const per_device_
     // "addrs" passed from ntt_smem_stages_kernel should be in constant memory, which is dynamically indexable.
     // I guess nvcc moved ntt_smem_stages_kernel "inputs" and "outputs" to registers then tried to dynamically
     // index addr.data here in index_to_addr. Smart :eyeroll: Whatever, switch statement works.
-  } else {
-    return addrs.data[0] + idx;
   }
+  return addrs.data[0] + idx;
 }
 
 // Carries out up to MAX_SMEM_STAGES - log_tile_sz C-T stages in shared memory.

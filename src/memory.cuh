@@ -23,6 +23,7 @@ template <typename T, ld_modifier MODIFIER> static constexpr __device__ __forcei
   case ld_modifier::cv:
     return __ldcv(ptr);
   }
+  return *ptr;
 }
 
 enum class st_modifier { none, wb, cg, cs, wt };
