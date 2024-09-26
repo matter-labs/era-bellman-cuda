@@ -443,6 +443,9 @@ cudaError_t execute_async(const execution_configuration &exec_cfg) {
     extended_configuration cfg = {exec_cfg, scalars_attributes, bases_attributes, results_attributes, log_min_inputs_count, log_max_inputs_count, props};
     cudaError_t error = schedule_execution(cfg, true);
     if (error == cudaErrorMemoryAllocation) {
+      error = cudaGetLastError();
+      if (error != cudaErrorMemoryAllocation && error != cudaSuccess)
+        return error;
       log_max_inputs_count--;
       if (!copy_scalars)
         log_min_inputs_count--;
