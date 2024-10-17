@@ -33,8 +33,10 @@ cudaError_t generate_permutation_polynomials(const generate_permutation_polynomi
   switch (columns_count) {
   case 3:
     HANDLE_CUDA_ERROR(transpose<3>(unsorted_keys, cfg.indexes, log_rows_count, stream));
+    break;
   case 4:
     HANDLE_CUDA_ERROR(transpose<4>(unsorted_keys, cfg.indexes, log_rows_count, stream));
+    break;
   default:
     assert(columns_count == 3 || columns_count == 4);
   }
