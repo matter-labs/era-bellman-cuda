@@ -5,7 +5,7 @@ We truly appreciate your efforts to discover and disclose security issues respon
 ## Vulnerabilities
 
 If you'd like to report a security issue in the repositories of matter-labs organization, please proceed to our
-[Bug Bounty Program on Immunefi](https://era.zksync.io/docs/reference/troubleshooting/audit-bug-bounty.html#bug-bounty-program).
+[Bug Bounty Program on Immunefi](https://immunefi.com/bounty/zksyncera/).
 
 ## Other Security Issues
 
