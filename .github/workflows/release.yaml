@@ -15,7 +15,7 @@ jobs:
   build_release:
     runs-on: [ubuntu-latest]
     container:
-      image: nvidia/cuda:11.8.0-devel-ubuntu22.04
+      image: nvidia/cuda:12.8.0-devel-ubuntu22.04
     permissions:
       contents: write
 
