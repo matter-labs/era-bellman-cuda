@@ -411,7 +411,7 @@ bc_error ff_bit_reverse(const void *values, void *result, unsigned log_count, bc
 // streams - Pointer to an array of streams on which this operation will be scheduled
 // device_ids - pointer to an array of device ids of the devices on which this operation will be executed
 // log_devices_count - Log2 of the count of devices on which this operation will be executed
-bc_error ff_bit_reverse_multigpu(const void **values, void **results, unsigned log_count, const bc_stream *streams, const int *device_ids,
+bc_error ff_bit_reverse_multigpu(const void **values, void **results, unsigned log_count, unsigned log_degree, const bc_stream *streams, const int *device_ids,
                                  unsigned log_devices_count);
 
 // Selects values from the source vector based on the indexes and stores them in the destination vector
