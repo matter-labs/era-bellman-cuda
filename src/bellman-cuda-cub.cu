@@ -1,6 +1,9 @@
 #include "bellman-cuda-cub.cuh"
 #include "ff_dispatch_st.cuh"
-#include <cub/cub.cuh>
+#include <cub/device/device_radix_sort.cuh>
+#include <cub/device/device_reduce.cuh>
+#include <cub/device/device_run_length_encode.cuh>
+#include <cub/device/device_scan.cuh>
 
 namespace common {
 
