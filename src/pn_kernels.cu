@@ -1,7 +1,7 @@
 #include "common.cuh"
 #include "ff_kernels.cuh"
 #include "pn_kernels.cuh"
-#include <cub/cub.cuh>
+#include <cub/warp/warp_store.cuh>
 
 namespace pn {
 
