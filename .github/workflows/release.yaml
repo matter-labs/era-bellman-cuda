@@ -24,7 +24,7 @@ jobs:
         run: |
           apt update && apt install -y pkg-config libssl-dev libclang-dev gcc g++ cmake git gh
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Build
         run: |
