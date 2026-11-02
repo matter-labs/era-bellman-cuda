@@ -1,0 +1,53 @@
+name: GPU tests (simulated)
+
+# Optional, non-required check. The runners have no GPU, so this runs a subset
+# of the tests on a simulated NVIDIA A100 (https://github.com/pantheongpu/pantheonsim).
+# A simulator cannot reproduce hardware-specific behaviour or timing, so it
+# complements real-GPU testing and does not replace it.
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  gpu-tests:
+    name: EC tests on a simulated A100
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Set up the simulated GPU and CUDA toolkit
+        uses: pantheongpu/setup-pantheonsim@dda0c8df8d72627c295edbae525354ba2bcb1687 # v0.1.4
+        with:
+          gpu: nvidia/a100
+          cuda-toolkit: "13.0"
+
+      - name: Configure
+        run: |
+          # 80-virtual embeds PTX only: the simulator JIT-compiles PTX and does not run SASS.
+          cmake -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON \
+            -DCMAKE_CUDA_ARCHITECTURES=80-virtual \
+            -DCMAKE_CUDA_RUNTIME_LIBRARY=Shared
+
+      - name: Build
+        run: cmake --build build -j
+
+      # The ff, ntt, msm and montmul tests take minutes each on a simulated GPU,
+      # so only the EC tests run. DeviceG1TimesIEqualsGIXyzz is skipped because
+      # its fully unrolled kernel needs more PTX registers than the simulator allows.
+      - name: Test
+        run: vgpu run ./build/tests/tests --gtest_filter='ECTest.*-ECTest.DeviceG1TimesIEqualsGIXyzz'
+
+      - name: Free disk space
+        if: always()
+        run: |
+          df -h /
+          rm -rf build
+          df -h /
